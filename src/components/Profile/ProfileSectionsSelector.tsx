@@ -1,14 +1,14 @@
-import { Section } from "@/types/common";
 import { Stack } from "@chakra-ui/react";
 import SectionPicker from "./SectionPicker";
 import React from "react";
+import { SECTIONS } from "@/constants/constants";
 
 const ProfileSectionsSelector: React.FC = () => {
   return (
     <Stack spacing={5}>
-      <SectionPicker section={Section.PROJECTS} />
-      <SectionPicker section={Section.EXPERIENCE} />
-      <SectionPicker section={Section.ABOUT} />
+      {SECTIONS.map((section) => (
+        <SectionPicker section={section} key={`section-${section}`} />
+      ))}
     </Stack>
   );
 };

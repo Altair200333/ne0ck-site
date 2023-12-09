@@ -1,14 +1,14 @@
 import { Section } from "@/types/common";
-import { useRef } from "react";
 import AnimatedSection from "./AnimatedSection";
 import React from "react";
 import { Box } from "@chakra-ui/react";
+import { SECTIONS } from "@/constants/constants";
+import { currentSection } from "@/signals/signals";
 
 const ProfileSectionsList: React.FC = () => {
-  const sections = [Section.ABOUT, Section.EXPERIENCE, Section.PROJECTS];
-  const ref = useRef<HTMLDivElement>(null);
-
   const renderSection = (section: Section) => {
+    const isActive = section === currentSection.value;
+
     return (
       <Box
         position={"absolute"}
@@ -18,6 +18,7 @@ const ProfileSectionsList: React.FC = () => {
         top={0}
         key={section}
         overflowX={"hidden"}
+        zIndex={isActive ? 2 : 1}
       >
         <AnimatedSection section={section} />
       </Box>
@@ -25,8 +26,8 @@ const ProfileSectionsList: React.FC = () => {
   };
 
   return (
-    <Box w="100%" maxW="600px" position={"relative"} ref={ref}>
-      {sections.map(renderSection)}
+    <Box w="100%" maxW="700px" position={"relative"}>
+      {SECTIONS.map(renderSection)}
     </Box>
   );
 };
