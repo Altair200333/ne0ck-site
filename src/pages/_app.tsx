@@ -1,5 +1,6 @@
 import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import React from "react";
 
 // Define your theme config
@@ -38,6 +39,10 @@ const customTheme = extendTheme({
 const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps) => {
   return (
     <ChakraProvider theme={customTheme}>
+      <Head>
+        <title>Ne0ck</title>
+        <meta charSet="utf-8" />
+      </Head>
       <Component {...pageProps} />
     </ChakraProvider>
   );
