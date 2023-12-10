@@ -21,6 +21,7 @@ const customTheme = extendTheme({
             : "gray.100",
         "background-attachment": "fixed",
         color: props.colorMode === "dark" ? "whiteAlpha.900" : "gray.800",
+        fontFamily: '"Inter", "Noto"',
       },
       "&::-webkit-scrollbar": {
         width: "4px",
@@ -42,6 +43,10 @@ const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps) => {
       <Head>
         <title>Ne0ck</title>
         <meta charSet="utf-8" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter"
+          rel="stylesheet"
+        ></link>
       </Head>
       <Component {...pageProps} />
     </ChakraProvider>

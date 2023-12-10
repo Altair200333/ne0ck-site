@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import ProfileSectionsList from "./ProfileSectionsList";
 import ProfileSectionsSelector from "./ProfileSectionsSelector";
 import ShortBio from "./ShortBio";
@@ -6,7 +6,7 @@ import React from "react";
 
 const ProfilePage: React.FC = () => {
   return (
-    <Flex flexDirection={"row"} justifyContent={"space-between"}>
+    <Flex flexDirection={"row"}>
       <Flex
         flexDirection={"column"}
         maxW={"300px"}
@@ -18,7 +18,9 @@ const ProfilePage: React.FC = () => {
         <ShortBio />
         <ProfileSectionsSelector />
       </Flex>
-      <ProfileSectionsList />
+      <Box w="100%" display={"flex"} justifyContent={"center"}>
+        <ProfileSectionsList />
+      </Box>
     </Flex>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 
 const ShortBio: React.FC = () => {
   return (
-    <Stack>
+    <Stack minW="250px">
       <Text fontSize={"30px"} fontWeight={600}>
         Mike Petrenko
       </Text>
