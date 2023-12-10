@@ -1,7 +1,7 @@
 import { SECTION_LABEL } from "@/constants/constants";
 import { Section, SectionProps } from "@/types/common";
 import { assertUnreachable } from "@/utils/utils";
-import { Stack, Center, Text } from "@chakra-ui/react";
+import { Stack, Center, Text, StackProps } from "@chakra-ui/react";
 import React from "react";
 import About from "./Sections/About";
 import Blog from "./Sections/Blog";
@@ -23,11 +23,11 @@ const renderSection = (section: Section) => {
   }
 };
 
-const ProfileSection: React.FC<SectionProps> = (props) => {
-  const { section } = props;
+const ProfileSection: React.FC<SectionProps & StackProps> = (props) => {
+  const { section, ...rest } = props;
 
   return (
-    <Stack w="100%" h="100%">
+    <Stack w="100%" h="100%" {...rest}>
       <Center w="100%">
         <Text color={"white"} fontWeight={500} fontSize={"20px"}>
           {SECTION_LABEL[section]}

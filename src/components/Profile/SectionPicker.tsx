@@ -27,7 +27,10 @@ const SectionPicker: React.FC<SectionProps> = (props) => {
         {...(isActive && { width: activeWidth })}
         transition={"0.2s ease-in-out"}
       />
-      <Text color={isActive ? "white" : inactiveColor} fontWeight={500}>
+      <Text
+        color={isActive ? "white" : inactiveColor}
+        fontWeight={isActive ? 600 : 500}
+      >
         {SECTION_LABEL[section]}
       </Text>
     </HStack>

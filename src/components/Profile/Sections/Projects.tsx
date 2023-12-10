@@ -4,12 +4,18 @@ import { ProjectShortInfo } from "@/types/projects";
 
 const PROJECTS_INFO: ProjectShortInfo[] = [
   {
+    title: "🎨 Personal website",
+    description: "Small web app built with Next.js and chakra ui",
+  },
+  {
     title: "🌤️ Weather NSU app ",
-    description: "Small weather app using data from weather.nsu.ru",
+    description:
+      "Weather app with widget using local weather data from weather.nsu.ru",
   },
   {
     title: "🎮 Voxel raytracing engine (again?)",
-    description: "Realtime GPU/CPU voxel raytracer",
+    description:
+      "Realtime GPU/CPU voxel raytracer supporting magica voxel models",
   },
   {
     title: "🕹️ Realtime voxel raytracer",
@@ -21,14 +27,23 @@ const PROJECTS_INFO: ProjectShortInfo[] = [
   },
   {
     title: "🛠️ Simple 3D engine",
-    description: "Simple 3D engine built only with SDL",
+    description: "Simple 3D engine made from scratch built only with SDL",
   },
 ];
 
 const ProjectInfo: React.FC<{ item: ProjectShortInfo }> = ({ item }) => {
   const { title, description } = item;
   return (
-    <Stack spacing={1}>
+    <Stack
+      spacing={1}
+      _hover={{
+        backgroundColor: "#424461",
+      }}
+      p={3}
+      borderRadius={"12px"}
+      transition={"0.2s ease-in-out"}
+      cursor={"pointer"}
+    >
       <Text fontWeight={500}>{title}</Text>
       <Text color={"gray.100"}>{description}</Text>
     </Stack>
@@ -38,11 +53,9 @@ const ProjectInfo: React.FC<{ item: ProjectShortInfo }> = ({ item }) => {
 const Projects: React.FC = () => {
   return (
     <Box>
-      <Stack spacing={8}>
-        {PROJECTS_INFO.map((item) => (
-          <ProjectInfo item={item} key={item.title} />
-        ))}
-      </Stack>
+      {PROJECTS_INFO.map((item) => (
+        <ProjectInfo item={item} key={item.title} />
+      ))}
     </Box>
   );
 };
