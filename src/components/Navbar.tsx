@@ -32,7 +32,7 @@ const socialLinks: SocialLink[] = [
 const Navbar: React.FC = () => {
   return (
     <Flex
-      bg={"linear-gradient(170deg, #121022, #1e2039, #343561)"}
+      bg={"linear-gradient(170deg,  #1e2039, #343561)"}
       boxShadow="md"
       h={"45px"}
     >

@@ -17,7 +17,7 @@ const customTheme = extendTheme({
       body: {
         bg:
           props.colorMode === "dark"
-            ? "linear-gradient(60deg, #121022, #1e2039, #343561)"
+            ? "linear-gradient(60deg, #1e2039, #343561)"
             : "gray.100",
         "background-attachment": "fixed",
         color: props.colorMode === "dark" ? "whiteAlpha.900" : "gray.800",
