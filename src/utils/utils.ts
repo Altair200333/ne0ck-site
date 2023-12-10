@@ -23,7 +23,9 @@ export const formatDateRange = (
   }
 
   // Get the period in years and months
-  const { years, months } = interval.toDuration(["years", "months"]).toObject();
+  const { years = 0, months = 0 } = interval
+    .toDuration(["years", "months"])
+    .toObject();
 
   const yearWord = "y";
   const monthWord = "m";
