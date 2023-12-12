@@ -21,7 +21,9 @@ const ProfileNavigation: React.FC = () => {
 };
 
 const ProfilePage: React.FC = () => {
-  const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
+  const [isLargeScreen] = useMediaQuery("(min-width: 800px)", {
+    fallback: true,
+  });
 
   if (isLargeScreen) {
     return (

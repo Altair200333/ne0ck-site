@@ -27,7 +27,7 @@ const ProfileSection: React.FC<SectionProps & StackProps> = (props) => {
   const { section, ...rest } = props;
 
   return (
-    <Stack w="100%" h="100%" {...rest}>
+    <Stack w="100%" {...rest}>
       <Center w="100%">
         <Text color={"white"} fontWeight={500} fontSize={"20px"}>
           {SECTION_LABEL[section]}
