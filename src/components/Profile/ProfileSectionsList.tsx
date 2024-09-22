@@ -28,7 +28,7 @@ const ProfileSectionsList: React.FC = () => {
   };
 
   return (
-    <Box w="100%" overflowX={"auto"} position={"relative"} >
+    <Box w="100%" overflowX={"auto"} position={"relative"}>
       {SECTIONS.map(renderSection)}
     </Box>
   );
