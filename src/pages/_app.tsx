@@ -44,10 +44,6 @@ const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps) => {
         <title>Ne0ck</title>
         <meta charSet="utf-8" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter"
-          rel="stylesheet"
-        ></link>
       </Head>
       <Component {...pageProps} />
     </ChakraProvider>

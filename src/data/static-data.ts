@@ -28,8 +28,20 @@ export const EXPERIENCE_INFO: ExperienceItem[] = [
 
 export const PROJECTS_INFO: ProjectShortInfo[] = [
   {
+    title: "📈 Trading agent",
+    description: "Using LLM to decide actions on crypto market",
+  },
+  {
+    title: "📃 Obisidian MD to PDF converter",
+    description: "Convert obsidian MD doc to PDF with respect to custom theme",
+  },
+  {
+    title: "🏏 Nvidia config manager",
+    description: "Automate presets management for Nvidia control panel",
+  },
+  {
     title: "🎨 Personal website",
-    description: "Small web app built with Next.js and chakra ui",
+    description: "Small web app built with Next.js and Chakra UI",
   },
   {
     title: "🎮 Escape From Tarkov radar",
@@ -39,7 +51,7 @@ export const PROJECTS_INFO: ProjectShortInfo[] = [
   {
     title: "🌤️ Weather NSU app ",
     description:
-      "Weather app with widget using local weather data from weather.nsu.ru",
+      "Mini weather app with widget using local weather data from weather.nsu.ru",
   },
   {
     title: "⚡ Voxel raytracing engine (again?)",

@@ -1,4 +1,4 @@
-import { Box, Flex, Stack, useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex, Stack, StackProps, useMediaQuery } from "@chakra-ui/react";
 import ProfileSectionsList from "./ProfileSectionsList";
 import ProfileSectionsSelector from "./ProfileSectionsSelector";
 import ShortBio from "./ShortBio";
@@ -7,12 +7,12 @@ import React from "react";
 const ProfileNavigation: React.FC = () => {
   return (
     <Flex
-      flexDirection={"column"}
-      maxW={"300px"}
-      minH={"250px"}
-      maxH={"500px"}
+      flexDirection="column"
+      maxW="300px"
+      minH="250px"
+      maxH="500px"
       h="40%"
-      justifyContent={"space-between"}
+      justifyContent="space-between"
     >
       <ShortBio />
       <ProfileSectionsSelector />
@@ -25,24 +25,23 @@ const ProfilePage: React.FC = () => {
     fallback: true,
   });
 
-  if (isLargeScreen) {
-    return (
-      <Flex flexDirection={"row"}>
-        <ProfileNavigation />
-        <Box w="100%" display={"flex"} justifyContent={"center"}>
-          <ProfileSectionsList />
-        </Box>
-      </Flex>
-    );
-  }
+  const Container = isLargeScreen ? Flex : Stack;
+  const containerProps: StackProps = isLargeScreen
+    ? { flexDirection: "row" }
+    : { spacing: 10 };
 
   return (
-    <Stack spacing={10}>
+    <Container {...containerProps}>
       <ProfileNavigation />
-      <Box w="100%" h="100%" display={"flex"} justifyContent={"center"}>
+      <Box
+        w="100%"
+        display="flex"
+        justifyContent="center"
+        h={isLargeScreen ? "auto" : "100%"}
+      >
         <ProfileSectionsList />
       </Box>
-    </Stack>
+    </Container>
   );
 };
 

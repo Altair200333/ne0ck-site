@@ -13,12 +13,14 @@ const ProfileSectionsList: React.FC = () => {
       <Box
         position={"absolute"}
         w="100%"
-        h="100%"
-        left={0}
+        maxW="700px"
+        left="50%"
         top={0}
+        transform="translateX(-50%)"
         key={section}
-        overflowX={"hidden"}
+        overflow={"hidden"}
         zIndex={isActive ? 2 : 1}
+        display={isActive ? "block" : "none"}
       >
         <AnimatedSection section={section} />
       </Box>
@@ -26,7 +28,7 @@ const ProfileSectionsList: React.FC = () => {
   };
 
   return (
-    <Box w="100%" maxW="700px" position={"relative"}>
+    <Box w="100%" overflowX={"auto"} position={"relative"} >
       {SECTIONS.map(renderSection)}
     </Box>
   );
