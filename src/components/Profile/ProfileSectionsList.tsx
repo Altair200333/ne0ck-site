@@ -3,11 +3,13 @@ import AnimatedSection from "./AnimatedSection";
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import { SECTIONS } from "@/constants/constants";
-import { currentSection } from "@/signals/signals";
+import { useProfileSection } from "@/contexts/ProfileSectionContext";
 
 const ProfileSectionsList: React.FC = () => {
+  const { currentSection } = useProfileSection();
+
   const renderSection = (section: Section) => {
-    const isActive = section === currentSection.value;
+    const isActive = section === currentSection;
 
     return (
       <Box

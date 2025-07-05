@@ -2,7 +2,9 @@ import { Box, Flex, Stack, StackProps, useMediaQuery } from "@chakra-ui/react";
 import ProfileSectionsList from "./ProfileSectionsList";
 import ProfileSectionsSelector from "./ProfileSectionsSelector";
 import ShortBio from "./ShortBio";
-import React from "react";
+import React, { useState } from "react";
+import { Section } from "@/types/common";
+import { ProfileSectionProvider } from "@/contexts/ProfileSectionContext";
 
 const ProfileNavigation: React.FC = () => {
   return (
@@ -30,18 +32,27 @@ const ProfilePage: React.FC = () => {
     ? { flexDirection: "row" }
     : { spacing: 10 };
 
+  const [currentSection, setCurrentSection] = useState<Section>(
+    Section.PROJECTS,
+  );
+
   return (
-    <Container {...containerProps}>
-      <ProfileNavigation />
-      <Box
-        w="100%"
-        display="flex"
-        justifyContent="center"
-        h={isLargeScreen ? "auto" : "100%"}
-      >
-        <ProfileSectionsList />
-      </Box>
-    </Container>
+    <ProfileSectionProvider
+      currentSection={currentSection}
+      setCurrentSection={setCurrentSection}
+    >
+      <Container {...containerProps}>
+        <ProfileNavigation />
+        <Box
+          w="100%"
+          display="flex"
+          justifyContent="center"
+          h={isLargeScreen ? "auto" : "100%"}
+        >
+          <ProfileSectionsList />
+        </Box>
+      </Container>
+    </ProfileSectionProvider>
   );
 };
 
