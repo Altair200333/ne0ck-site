@@ -1,4 +1,4 @@
-import { currentSection } from "@/signals/signals";
+import { useProfileSection } from "@/contexts/ProfileSectionContext";
 import { SectionProps } from "@/types/common";
 import { useAnimate } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -11,7 +11,8 @@ const AnimatedSection: React.FC<SectionProps> = (props) => {
   const [scope, animate] = useAnimate();
   const [isHidden, setIsHidden] = useState(true); // prevent reload / remount flicker and animation
 
-  const isActive = section === currentSection.value;
+  const { currentSection } = useProfileSection();
+  const isActive = section === currentSection;
 
   useEffect(() => {
     const animateCallback = async () => {

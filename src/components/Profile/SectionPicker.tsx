@@ -1,19 +1,20 @@
 import { SECTION_LABEL } from "@/constants/constants";
-import { currentSection } from "@/signals/signals";
+import { useProfileSection } from "@/contexts/ProfileSectionContext";
 import { SectionProps } from "@/types/common";
 import { HStack, Text, Box } from "@chakra-ui/react";
 import React from "react";
 
 const SectionPicker: React.FC<SectionProps> = (props) => {
   const { section } = props;
-  const isActive = section === currentSection.value;
+  const { currentSection, setCurrentSection } = useProfileSection();
+  const isActive = section === currentSection;
 
   const inactiveColor = "gray.400";
   const activeWidth = "100px";
   const inActiveWidth = "50px";
 
   const setActive = () => {
-    currentSection.value = section;
+    setCurrentSection(section);
   };
 
   return (
