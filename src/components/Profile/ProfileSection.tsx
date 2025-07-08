@@ -24,8 +24,6 @@ const renderSection = (section: Section) => {
   }
 };
 
-const HEADER_HEIGHT = 40;
-
 const ProfileSection: React.FC<SectionProps> = ({ section }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const labelRef = React.useRef<HTMLParagraphElement>(null);
@@ -64,7 +62,8 @@ const ProfileSection: React.FC<SectionProps> = ({ section }) => {
         w="100%"
         flexShrink={0}
         position="relative"
-        h={`${HEADER_HEIGHT}px`}
+        display="flex"
+        alignItems="center"
         id="center"
       >
         <Text
@@ -72,10 +71,9 @@ const ProfileSection: React.FC<SectionProps> = ({ section }) => {
           color="white"
           fontWeight={500}
           fontSize="20px"
-          position="absolute"
+          position="relative"
           left={`${labelLeft}px`}
-          top="50%"
-          transform="translateY(-50%)"
+          whiteSpace="nowrap"
         >
           {SECTION_LABEL[section]}
         </Text>
