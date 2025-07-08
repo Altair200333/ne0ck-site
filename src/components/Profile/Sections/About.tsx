@@ -9,7 +9,7 @@ const About: React.FC = () => {
         technologies such as:
       </Text>
 
-      <ListRoot>
+      <ListRoot gap={1}>
         <ListItem>
           • Web development (React, Node, JS/TS, Nest.js, Next.js)
         </ListItem>

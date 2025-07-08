@@ -1,6 +1,6 @@
 import { ExperienceItem } from "@/types/common";
 import { formatDateRange } from "@/utils/utils";
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Stack, Text, ListRoot, ListItem } from "@chakra-ui/react";
 import React from "react";
 
 const ExperienceInfo: React.FC<{ item: ExperienceItem }> = ({ item }) => {
@@ -21,13 +21,13 @@ const ExperienceInfo: React.FC<{ item: ExperienceItem }> = ({ item }) => {
       <Text fontSize={"sm"} color={"gray.300"}>
         {period}
       </Text>
-      <Box as="ul" pl={3} display="flex" flexDirection="column" gap={1}>
+      <ListRoot gap={1}>
         {details.map((detail, index) => (
-          <Box as="li" key={index} color="gray.100" listStyleType="disc">
-            {detail}
-          </Box>
+          <ListItem key={index} color="gray.100">
+            • {detail}
+          </ListItem>
         ))}
-      </Box>
+      </ListRoot>
     </Stack>
   );
 };
