@@ -3,7 +3,7 @@ import { Stack, Text, ListRoot, ListItem } from "@chakra-ui/react";
 
 const About: React.FC = () => {
   return (
-    <Stack gap={2}>
+    <Stack gap={2} p={4}>
       <Text color={"white"} fontWeight={500}>
         I am software developer with experience of working with different
         technologies such as:

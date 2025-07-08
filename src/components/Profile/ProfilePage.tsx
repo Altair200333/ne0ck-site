@@ -15,7 +15,6 @@ const ProfileNavigation: React.FC<ProfileNavigationProps> = () => {
     <Flex
       flexDirection="column"
       maxW="300px"
-      w={{ base: "100%", md: "300px" }}
       justifyContent="flex-start"
       alignItems="flex-start"
       gap={10}
