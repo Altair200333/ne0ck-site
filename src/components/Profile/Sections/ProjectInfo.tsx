@@ -6,10 +6,8 @@ const ProjectInfo: React.FC<{ item: ProjectShortInfo }> = ({ item }) => {
   const { title, description } = item;
   return (
     <Stack
-      spacing={1}
-      _hover={{
-        backgroundColor: "#424461",
-      }}
+      gap={1}
+      _hover={{ backgroundColor: "#424461" }}
       p={4}
       borderRadius={"12px"}
       transition={"0.2s ease-in-out"}

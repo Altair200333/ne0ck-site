@@ -18,7 +18,7 @@ const SectionPicker: React.FC<SectionProps> = (props) => {
   };
 
   return (
-    <HStack role="group" cursor={"pointer"} onClick={setActive}>
+    <HStack className="group" cursor={"pointer"} onClick={setActive}>
       <Box
         width={inActiveWidth}
         height={isActive ? "2px" : "1px"}
