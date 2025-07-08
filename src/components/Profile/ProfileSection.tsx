@@ -1,12 +1,13 @@
 import { SECTION_LABEL } from "@/constants/constants";
 import { Section, SectionProps } from "@/types/common";
 import { assertUnreachable } from "@/utils/utils";
-import { Stack, Center, Text, StackProps } from "@chakra-ui/react";
+import { Box, Center, Text } from "@chakra-ui/react";
 import React from "react";
 import About from "./Sections/About";
 import Blog from "./Sections/Blog";
 import Projects from "./Sections/Projects";
 import Experience from "./Sections/Experience";
+import BoxFitOverflow from "../Common/BoxFitOverflow";
 
 const renderSection = (section: Section) => {
   switch (section) {
@@ -23,18 +24,18 @@ const renderSection = (section: Section) => {
   }
 };
 
-const ProfileSection: React.FC<SectionProps & StackProps> = (props) => {
-  const { section, ...rest } = props;
-
+const ProfileSection: React.FC<SectionProps> = ({ section }) => {
   return (
-    <Stack w="100%" {...rest}>
-      <Center w="100%">
-        <Text color={"white"} fontWeight={500} fontSize={"20px"}>
+    <Box display="flex" flexDir="column" w="100%" h="100%" minH={0}>
+      <Center w="100%" flexShrink={0}>
+        <Text color="white" fontWeight={500} fontSize="20px">
           {SECTION_LABEL[section]}
         </Text>
       </Center>
-      {renderSection(section)}
-    </Stack>
+      <BoxFitOverflow flex={1} pt={4} px={2}>
+        {renderSection(section)}
+      </BoxFitOverflow>
+    </Box>
   );
 };
 

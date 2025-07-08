@@ -1,5 +1,5 @@
 import { SocialLink } from "@/types/social";
-import { Box, Center, Flex, HStack, Link } from "@chakra-ui/react";
+import { Box, Center, Flex, Link } from "@chakra-ui/react";
 import React from "react";
 import { FaGithub, FaLinkedin, FaTelegram, FaInstagram } from "react-icons/fa";
 import { MdOutgoingMail } from "react-icons/md";
@@ -12,8 +12,17 @@ const renderIcon = (item: SocialLink) => {
       _hover={{ transform: "scale(1.3)", cursor: "pointer" }}
       transition={"0.2s ease"}
       key={link}
+      display="flex"
+      alignItems="center"
     >
-      <Link href={link} isExternal>
+      <Link
+        href={link}
+        color="white"
+        display="flex"
+        alignItems="center"
+        h="100%"
+        target="_blank"
+      >
         <Icon size={25} />
       </Link>
     </Box>
@@ -37,9 +46,9 @@ const Navbar: React.FC = () => {
       h={"45px"}
     >
       <Center w="100%">
-        <HStack spacing={4}>
+        <Flex gap={4} alignItems="center">
           {socialLinks.map((item) => renderIcon(item))}
-        </HStack>
+        </Flex>
       </Center>
     </Flex>
   );

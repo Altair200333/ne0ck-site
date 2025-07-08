@@ -1,35 +1,20 @@
-import { extendTheme, ThemeConfig } from "@chakra-ui/react";
+import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
-const config: ThemeConfig = {
-  initialColorMode: "dark", // Set the initial color mode to dark
-  useSystemColorMode: false, // Disable the use of system color mode preference
-};
-
-const customTheme = extendTheme({
-  config,
-  styles: {
-    global: (props: any) => ({
-      body: {
-        bg:
-          props.colorMode === "dark"
-            ? "linear-gradient(60deg, #1e2039, #343561)"
-            : "gray.100",
-        "background-attachment": "fixed",
-        color: props.colorMode === "dark" ? "whiteAlpha.900" : "gray.800",
-        fontFamily: '"Inter", "Noto"',
-      },
-      "&::-webkit-scrollbar": {
-        width: "4px",
-      },
-      "&::-webkit-scrollbar-track": {
-        width: "6px",
-      },
-      "&::-webkit-scrollbar-thumb": {
-        background: "white",
-        borderRadius: "24px",
-      },
-    }),
+const config = defineConfig({
+  globalCss: {
+    body: {
+      background: "linear-gradient(60deg, #1e2039, #343561)",
+      backgroundAttachment: "fixed",
+      color: "whiteAlpha.900",
+      fontFamily: "Inter, Noto",
+      "&.light": { background: "gray.100", color: "gray.800" },
+    },
+    "&::-webkit-scrollbar": { width: "4px" },
+    "&::-webkit-scrollbar-track": { width: "6px" },
+    "&::-webkit-scrollbar-thumb": { background: "white", borderRadius: "24px" },
   },
 });
 
-export default customTheme;
+const system = createSystem(defaultConfig, config);
+
+export default system;
