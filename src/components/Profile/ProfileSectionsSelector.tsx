@@ -5,7 +5,7 @@ import { SECTIONS } from "@/constants/constants";
 
 const ProfileSectionsSelector: React.FC = () => {
   return (
-    <Stack spacing={5}>
+    <Stack gap={5}>
       {SECTIONS.map((section) => (
         <SectionPicker section={section} key={`section-${section}`} />
       ))}

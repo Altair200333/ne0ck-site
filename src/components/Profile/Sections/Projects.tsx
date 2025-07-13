@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { PROJECTS_INFO } from "@/data/static-data";
 import ProjectInfo from "./ProjectInfo";
+import { ProjectShortInfo } from "@/types/common";
+import ProjectPage from "./ProjectPage";
 
-const Projects: React.FC = () => {
+interface ProjectsProps {
+  setSectionHeaderHidden?: (hidden: boolean) => void;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ setSectionHeaderHidden }) => {
+  const [openedProject, setOpenedProjectImpl] = useState<
+    ProjectShortInfo | undefined
+  >(undefined);
+
+  const setOpenedProject = (project?: ProjectShortInfo) => {
+    setOpenedProjectImpl(project);
+    setSectionHeaderHidden?.(!!project);
+  };
+
+  if (openedProject) {
+    return (
+      <ProjectPage
+        project={openedProject}
+        onBack={() => setOpenedProject(undefined)}
+      />
+    );
+  }
+
   return (
-    <Box>
+    <Box display="flex" flexDirection="column" gap={3}>
       {PROJECTS_INFO.map((item) => (
-        <ProjectInfo item={item} key={item.title} />
+        <ProjectInfo
+          key={item.title}
+          item={item}
+          onClick={() => setOpenedProject(item)}
+        />
       ))}
     </Box>
   );

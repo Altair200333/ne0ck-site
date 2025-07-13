@@ -1,20 +1,23 @@
-import { Box, Flex, Stack, StackProps, useMediaQuery } from "@chakra-ui/react";
-import ProfileSectionsList from "./ProfileSectionsList";
+import { Flex, Stack, StackProps, useMediaQuery } from "@chakra-ui/react";
 import ProfileSectionsSelector from "./ProfileSectionsSelector";
 import ShortBio from "./ShortBio";
 import React, { useState } from "react";
 import { Section } from "@/types/common";
 import { ProfileSectionProvider } from "@/contexts/ProfileSectionContext";
+import ProfileSection from "./ProfileSection";
 
-const ProfileNavigation: React.FC = () => {
+interface ProfileNavigationProps {
+  isLargeScreen: boolean;
+}
+
+const ProfileNavigation: React.FC<ProfileNavigationProps> = () => {
   return (
     <Flex
       flexDirection="column"
       maxW="300px"
-      minH="250px"
-      maxH="500px"
-      h="40%"
-      justifyContent="space-between"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      gap={10}
     >
       <ShortBio />
       <ProfileSectionsSelector />
@@ -22,18 +25,24 @@ const ProfileNavigation: React.FC = () => {
   );
 };
 
-const ProfilePage: React.FC = () => {
-  const [isLargeScreen] = useMediaQuery("(min-width: 800px)", {
-    fallback: true,
+interface ProfilePageProps {
+  initialSection?: Section;
+}
+
+const FALLBACK_SECTION = Section.Projects;
+
+const ProfilePage: React.FC<ProfilePageProps> = ({ initialSection }) => {
+  const [isLargeScreen] = useMediaQuery(["(min-width: 800px)"], {
+    fallback: [true],
   });
 
   const Container = isLargeScreen ? Flex : Stack;
-  const containerProps: StackProps = isLargeScreen
-    ? { flexDirection: "row" }
-    : { spacing: 10 };
+  const containerProps: Partial<StackProps> = isLargeScreen
+    ? { flexDirection: "row", h: "100%", gap: 20 }
+    : { h: "100%", gap: 10 };
 
   const [currentSection, setCurrentSection] = useState<Section>(
-    Section.PROJECTS,
+    initialSection || FALLBACK_SECTION,
   );
 
   return (
@@ -42,15 +51,8 @@ const ProfilePage: React.FC = () => {
       setCurrentSection={setCurrentSection}
     >
       <Container {...containerProps}>
-        <ProfileNavigation />
-        <Box
-          w="100%"
-          display="flex"
-          justifyContent="center"
-          h={isLargeScreen ? "auto" : "100%"}
-        >
-          <ProfileSectionsList />
-        </Box>
+        <ProfileNavigation isLargeScreen={isLargeScreen} />
+        <ProfileSection section={currentSection} />
       </Container>
     </ProfileSectionProvider>
   );

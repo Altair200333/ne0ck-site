@@ -1,21 +1,23 @@
 import React from "react";
-import { ListItem, Stack, Text, UnorderedList } from "@chakra-ui/react";
+import { Stack, Text, ListRoot, ListItem } from "@chakra-ui/react";
 
 const About: React.FC = () => {
   return (
-    <Stack>
+    <Stack gap={2} p={4}>
       <Text color={"white"} fontWeight={500}>
         I am software developer with experience of working with different
         technologies such as:
       </Text>
 
-      <UnorderedList spacing={1}>
-        <ListItem>Web development (TS, Node, Nest.js, Next.js, React)</ListItem>
+      <ListRoot gap={1} px={4}>
+        <ListItem>
+          Web development (React, Node, JS/TS, Nest.js, Next.js)
+        </ListItem>
         <ListItem>3D (C#/C++ and OpenGL/DirectX/Unity)</ListItem>
-        <ListItem>Mobile development (Androind Java/Flutter)</ListItem>
-        <ListItem>Game development (Unity, blender)</ListItem>
-        <ListItem>Python (side projects + ML at university)</ListItem>
-      </UnorderedList>
+        <ListItem>Mobile development (Android Java / Flutter)</ListItem>
+        <ListItem>Game development (Unity, Blender)</ListItem>
+        <ListItem>Python (ML - machine detection, side projects)</ListItem>
+      </ListRoot>
     </Stack>
   );
 };

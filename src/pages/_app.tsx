@@ -2,11 +2,11 @@ import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
-import theme from "../theme";
+import system from "../theme";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider value={system}>
       <Head>
         <title>Ne0ck</title>
         <meta charSet="utf-8" />
