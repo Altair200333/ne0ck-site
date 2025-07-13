@@ -3,30 +3,36 @@ import dynamic from "next/dynamic";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
 import { ProjectShortInfo } from "@/types/common";
-import { ProjectId } from "@/data/static-data";
 
 interface ProjectPageProps {
   project: ProjectShortInfo;
   onBack: () => void;
 }
 
-const PAGES: Record<string, () => Promise<{ default: React.FC }>> = {
-  [ProjectId.TradingAgent]: () => import("./ProjectPages/trading-agent"),
-  [ProjectId.OpenVibrance]: () => import("./ProjectPages/open-vibrance"),
+const LoadingPlaceholder: React.FC = () => <Text fontSize="lg">Loading…</Text>;
+
+/**
+ * Dynamically try to import the project page. If the file does not exist,
+ * fall back to the "coming-soon" page
+ */
+const loadProjectPage = async (id: string) => {
+  try {
+    return await import(`./ProjectPages/${id}`);
+  } catch {
+    return import("./ProjectPages/coming-soon");
+  }
+};
+
+const resolveProjectPage = (id: string): React.ComponentType => {
+  return dynamic(() => loadProjectPage(id), {
+    ssr: false,
+    loading: () => <LoadingPlaceholder />,
+  });
 };
 
 const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack }) => {
   const PageComponent = useMemo(() => {
-    const page = PAGES[project.id];
-    if (!page) {
-      return dynamic(() => import("./ProjectPages/coming-soon"), {
-        ssr: false,
-      });
-    }
-    return dynamic(page, {
-      ssr: false,
-      loading: () => <Text fontSize="lg">Loading…</Text>,
-    });
+    return resolveProjectPage(project.id);
   }, [project.id]);
 
   return (
