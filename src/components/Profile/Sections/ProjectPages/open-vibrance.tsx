@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, HStack, Link, Stack, Text } from "@chakra-ui/react";
+import { Box, Link, Stack, Text } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
 import Image from "next/image";
 
