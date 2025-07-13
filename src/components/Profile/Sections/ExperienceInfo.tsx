@@ -14,6 +14,7 @@ const ExperienceInfo: React.FC<{ item: ExperienceItem }> = ({ item }) => {
       p={3}
       borderRadius={"12px"}
       transition={"0.2s ease-in-out"}
+      id="stack"
     >
       <Text fontWeight={500} fontSize={"lg"}>
         {title} at {company}
@@ -21,10 +22,10 @@ const ExperienceInfo: React.FC<{ item: ExperienceItem }> = ({ item }) => {
       <Text fontSize={"sm"} color={"gray.300"}>
         {period}
       </Text>
-      <ListRoot gap={1}>
+      <ListRoot gap={1} px={4}>
         {details.map((detail, index) => (
           <ListItem key={index} color="gray.100">
-            • {detail}
+            {detail}
           </ListItem>
         ))}
       </ListRoot>

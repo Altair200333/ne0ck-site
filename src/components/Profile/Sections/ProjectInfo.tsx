@@ -2,10 +2,14 @@ import { ProjectShortInfo } from "@/types/common";
 import { Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
-const ProjectInfo: React.FC<{ item: ProjectShortInfo }> = ({ item }) => {
+const ProjectInfo: React.FC<{
+  item: ProjectShortInfo;
+  onClick?: () => void;
+}> = ({ item, onClick }) => {
   const { title, description } = item;
   return (
     <Stack
+      onClick={onClick}
       gap={1}
       _hover={{ backgroundColor: "#424461" }}
       p={4}

@@ -9,12 +9,15 @@ import Projects from "./Sections/Projects";
 import Experience from "./Sections/Experience";
 import BoxFitOverflow from "../Common/BoxFitOverflow";
 
-const renderSection = (section: Section) => {
+const renderSection = (
+  section: Section,
+  setHeaderHidden: (hidden: boolean) => void,
+) => {
   switch (section) {
     case Section.ABOUT:
       return <About />;
     case Section.PROJECTS:
-      return <Projects />;
+      return <Projects setSectionHeaderHidden={setHeaderHidden} />;
     case Section.EXPERIENCE:
       return <Experience />;
     case Section.BLOG:
@@ -29,6 +32,7 @@ const ProfileSection: React.FC<SectionProps> = ({ section }) => {
   const labelRef = React.useRef<HTMLParagraphElement>(null);
 
   const [labelLeft, setLabelLeft] = React.useState<number>(0);
+  const [isHeaderHidden, setHeaderHidden] = React.useState(false);
 
   const calculateLabelPosition = React.useCallback(() => {
     if (!containerRef.current || !labelRef.current) {
@@ -55,31 +59,37 @@ const ProfileSection: React.FC<SectionProps> = ({ section }) => {
     return () => window.removeEventListener("resize", calculateLabelPosition);
   }, [calculateLabelPosition]);
 
+  React.useEffect(() => {
+    setHeaderHidden(false);
+  }, [section]);
+
   return (
     <Box display="flex" flexDir="column" w="100%" h="100%" minH={0}>
-      <Box
-        ref={containerRef}
-        w="100%"
-        flexShrink={0}
-        position="relative"
-        display="flex"
-        alignItems="center"
-        id="center"
-      >
-        <Text
-          ref={labelRef}
-          color="white"
-          fontWeight={500}
-          fontSize="20px"
+      {!isHeaderHidden && (
+        <Box
+          ref={containerRef}
+          w="100%"
+          flexShrink={0}
           position="relative"
-          left={`${labelLeft}px`}
-          whiteSpace="nowrap"
+          display="flex"
+          alignItems="center"
+          id="center"
         >
-          {SECTION_LABEL[section]}
-        </Text>
-      </Box>
+          <Text
+            ref={labelRef}
+            color="white"
+            fontWeight={500}
+            fontSize="20px"
+            position="relative"
+            left={`${labelLeft}px`}
+            whiteSpace="nowrap"
+          >
+            {SECTION_LABEL[section]}
+          </Text>
+        </Box>
+      )}
       <BoxFitOverflow flex={1} pt={4}>
-        {renderSection(section)}
+        {renderSection(section, setHeaderHidden)}
       </BoxFitOverflow>
     </Box>
   );

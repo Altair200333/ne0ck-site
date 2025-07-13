@@ -10,6 +10,7 @@ export type SectionProps = {
 };
 
 export type ProjectShortInfo = {
+  id: string;
   title: string;
   description: string;
 };
