@@ -43,7 +43,7 @@ export enum ProjectId {
 export const PROJECTS_INFO: ProjectShortInfo[] = [
   {
     id: ProjectId.OpenVibrance,
-    title: "🎙️ Open Vibrance",
+    title: "🎙️✏️ Open Vibrance",
     description: "Minimalistic desktop overlay dictation app",
   },
   {
