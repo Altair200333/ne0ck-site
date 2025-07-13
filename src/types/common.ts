@@ -1,8 +1,8 @@
 export enum Section {
-  PROJECTS = "PROJECTS",
-  EXPERIENCE = "EXPERIENCE",
-  ABOUT = "ABOUT",
-  BLOG = "BLOG",
+  Projects = "projects",
+  Experience = "experience",
+  About = "about",
+  Blog = "blog",
 }
 
 export type SectionProps = {

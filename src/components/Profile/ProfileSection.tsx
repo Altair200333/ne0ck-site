@@ -14,13 +14,13 @@ const renderSection = (
   setHeaderHidden: (hidden: boolean) => void,
 ) => {
   switch (section) {
-    case Section.ABOUT:
+    case Section.About:
       return <About />;
-    case Section.PROJECTS:
+    case Section.Projects:
       return <Projects setSectionHeaderHidden={setHeaderHidden} />;
-    case Section.EXPERIENCE:
+    case Section.Experience:
       return <Experience />;
-    case Section.BLOG:
+    case Section.Blog:
       return <Blog />;
     default:
       return assertUnreachable(section);

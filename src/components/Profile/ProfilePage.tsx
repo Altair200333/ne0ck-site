@@ -25,7 +25,13 @@ const ProfileNavigation: React.FC<ProfileNavigationProps> = () => {
   );
 };
 
-const ProfilePage: React.FC = () => {
+interface ProfilePageProps {
+  initialSection?: Section;
+}
+
+const FALLBACK_SECTION = Section.Projects;
+
+const ProfilePage: React.FC<ProfilePageProps> = ({ initialSection }) => {
   const [isLargeScreen] = useMediaQuery(["(min-width: 800px)"], {
     fallback: [true],
   });
@@ -36,7 +42,7 @@ const ProfilePage: React.FC = () => {
     : { h: "100%", gap: 10 };
 
   const [currentSection, setCurrentSection] = useState<Section>(
-    Section.PROJECTS,
+    initialSection || FALLBACK_SECTION,
   );
 
   return (
