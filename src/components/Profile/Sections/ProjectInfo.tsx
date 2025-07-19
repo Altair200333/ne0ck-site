@@ -1,7 +1,6 @@
 import { ProjectShortInfo } from "@/types/common";
 import { Box, HStack, Stack, Text } from "@chakra-ui/react";
 import React from "react";
-import { PiMicrophone } from "react-icons/pi";
 
 const ProjectInfo: React.FC<{
   item: ProjectShortInfo;
@@ -18,6 +17,7 @@ const ProjectInfo: React.FC<{
       transition={"0.2s ease-in-out"}
       cursor={"pointer"}
       className={"group"}
+      maxW={"700px"}
     >
       <HStack>
         <Box
