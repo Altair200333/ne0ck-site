@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-import { EXPERIENCE_INFO } from "@/data/static-data";
 import ExperienceInfo from "./ExperienceInfo";
+import { EXPERIENCE_INFO } from "@/data/static-data";
 
 const Experience: React.FC = () => {
   return (
