@@ -1,3 +1,5 @@
+import React from "react";
+
 export enum Section {
   Projects = "projects",
   Experience = "experience",
@@ -12,6 +14,7 @@ export type SectionProps = {
 export type ProjectShortInfo = {
   id: string;
   title: string;
+  icon: React.ReactNode;
   description: string;
 };
 

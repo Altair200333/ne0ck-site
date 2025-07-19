@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Box } from "@chakra-ui/react";
-import { PROJECTS_INFO } from "@/data/static-data";
 import ProjectInfo from "./ProjectInfo";
 import { ProjectShortInfo } from "@/types/common";
 import ProjectPage from "./ProjectPage";
+import { PROJECTS_INFO } from "@/data/projects-definitions";
 
 interface ProjectsProps {
   setSectionHeaderHidden?: (hidden: boolean) => void;

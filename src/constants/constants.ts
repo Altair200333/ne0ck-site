@@ -8,3 +8,5 @@ export const SECTION_LABEL: Record<Section, string> = {
 };
 
 export const SECTIONS = Object.values(Section);
+
+export const MOBILE_BREAKPOINT_PX = 800;
