@@ -17,7 +17,7 @@ const ComingSoon: React.FC = () => {
   return (
     <Stack>
       <Text fontSize="lg">
-        This is not written yet, but probably will be soon
+        This article is not written yet, but probably will be soon
       </Text>
       <Skeleton
         loading={isLoadingPlaceholder}
