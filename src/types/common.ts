@@ -1,9 +1,9 @@
 import React from "react";
 
 export enum Section {
+  About = "about",
   Projects = "projects",
   Experience = "experience",
-  About = "about",
   Blog = "blog",
 }
 

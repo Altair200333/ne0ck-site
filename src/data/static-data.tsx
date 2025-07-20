@@ -5,7 +5,7 @@ export const EXPERIENCE_INFO: ExperienceItem[] = [
     title: "Full-stack Developer",
     company: "Regie.ai",
     startDate: "2022-10-01",
-    details: ["To be filled..."],
+    details: ["Keeping silence..."],
   },
   {
     title: "Software Developer",

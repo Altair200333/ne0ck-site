@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
 import { ProjectShortInfo } from "@/types/common";
+import { useIsLargeScreen } from "@/utils/hooks";
 
 interface ProjectPageProps {
   project: ProjectShortInfo;
@@ -31,12 +32,16 @@ const resolveProjectPage = (id: string): React.ComponentType => {
 };
 
 const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack }) => {
+  const isLargeScreen = useIsLargeScreen();
+
+  const maxWidth = isLargeScreen ? "70%" : "95%";
+
   const PageComponent = useMemo(() => {
     return resolveProjectPage(project.id);
   }, [project.id]);
 
   return (
-    <Box>
+    <Box maxW={maxWidth}>
       <Flex align="center" gap={2} mb={4}>
         <Box
           as={IoArrowBack}

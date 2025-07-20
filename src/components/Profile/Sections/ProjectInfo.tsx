@@ -28,7 +28,7 @@ const ProjectInfo: React.FC<{
       <HStack>
         <Box
           _groupHover={{
-            color: "var(--chakra-colors-blue-500)",
+            color: "var(--chakra-colors-blue-300)",
             transform: "scale(1.2) rotate(-10deg)",
           }}
           transition={"0.2s ease-in-out"}
