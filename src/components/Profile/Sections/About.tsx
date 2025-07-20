@@ -7,6 +7,7 @@ import { FaDesktop } from "react-icons/fa";
 import { TbDeviceMobile } from "react-icons/tb";
 import { GiSandSnake } from "react-icons/gi";
 import { useIsLargeScreen } from "@/utils/hooks";
+import { isDefined } from "@/utils/utils";
 
 const CARD_WIDTH_PX = 170;
 const CARD_HEIGHT_PX = 50;
@@ -18,15 +19,15 @@ const InterestCard: React.FC<{
   card: CardGridItem;
   toggleSelected: () => void;
 }> = ({ card, toggleSelected }) => {
-  const { i, j, isSelected, title, icon } = card;
+  const { i, j, isSelected, title, icon, colSpan, rowSpan } = card;
   const top = j * (CARD_HEIGHT_PX + CARDS_GAP_PX);
   const left = i * (CARD_WIDTH_PX + CARDS_GAP_PX);
 
   const width = isSelected
-    ? `${CARD_WIDTH_PX * 3 + CARDS_GAP_PX * 2}px`
+    ? `${CARD_WIDTH_PX * colSpan + CARDS_GAP_PX * (colSpan - 1)}px`
     : `${CARD_WIDTH_PX}px`;
   const height = isSelected
-    ? `${CARD_HEIGHT_PX * 2 + CARDS_GAP_PX}px`
+    ? `${CARD_HEIGHT_PX * rowSpan + CARDS_GAP_PX * (rowSpan - 1)}px`
     : `${CARD_HEIGHT_PX}px`;
 
   return (
@@ -153,34 +154,102 @@ const computeDefaultGrid = (
   return { grid, cols, rows };
 };
 
-const markAsSelected = (card: CardGridItem) => {
-  card.i = 0;
-  card.isSelected = true;
-  card.colSpan = 3;
-  card.rowSpan = 2;
-};
+const findNearestFreeCell = (
+  card: CardGridItem,
+  occupationMatrix: boolean[][],
+) => {
+  if (card.isSelected) {
+    return { i: card.i, j: card.j };
+  }
 
-const About: React.FC = () => {
-  const isLargeScreen = useIsLargeScreen();
-  const [selectedCardTitle, setSelectedCardTitle] = useState<string | null>(
-    null,
-  );
+  // If current cell free – stay put
+  if (!occupationMatrix[card.j][card.i]) {
+    return { i: card.i, j: card.j };
+  }
 
-  const toggleSelectedCard = (card: CardDefinition) => {
-    if (selectedCardTitle === card.title) {
-      setSelectedCardTitle(null);
-    } else {
-      setSelectedCardTitle(card.title);
+  const rowsCount = occupationMatrix.length;
+  const colsCount = occupationMatrix[0].length;
+
+  /**
+   * 1D scan line that finds the closest free index in the direction
+   */
+  const searchLine = (
+    start: number,
+    length: number,
+    isFree: (idx: number) => boolean,
+  ) => {
+    let bestIdx: number | null = null;
+    let bestDist = Number.POSITIVE_INFINITY;
+    for (let idx = 0; idx < length; idx++) {
+      if (!isFree(idx)) {
+        continue;
+      }
+      const dist = Math.abs(idx - start);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = idx;
+      }
     }
+    return { idx: bestIdx, dist: bestDist } as const;
   };
 
-  const cardsGrid = useMemo(() => {
+  const rowResult = searchLine(
+    card.i,
+    colsCount,
+    (col) => !occupationMatrix[card.j][col],
+  );
+  const colResult = searchLine(
+    card.j,
+    rowsCount,
+    (row) => !occupationMatrix[row][card.i],
+  );
+
+  if (
+    isDefined(rowResult.idx) &&
+    (rowResult.dist <= colResult.dist || !isDefined(colResult.idx))
+  ) {
+    return { i: rowResult.idx, j: card.j };
+  }
+  if (isDefined(colResult.idx)) {
+    return { i: card.i, j: colResult.idx };
+  }
+
+  // fallback direct search by
+  for (let row = 0; row < rowsCount; row++) {
+    for (let col = 0; col < colsCount; col++) {
+      if (!occupationMatrix[row][col]) {
+        return { i: col, j: row };
+      }
+    }
+  }
+  return { i: card.i, j: card.j };
+};
+
+const markAsSelected = (
+  card: CardGridItem,
+  params: {
+    rowSpan: number;
+    colSpan: number;
+  },
+) => {
+  card.i = 0;
+  card.isSelected = true;
+  card.colSpan = params.colSpan;
+  card.rowSpan = params.rowSpan;
+};
+
+const useCardsGrid = (params: {
+  isLargeScreen: boolean;
+  selectedCardTitle: string | null;
+}) => {
+  const { isLargeScreen, selectedCardTitle } = params;
+
+  return useMemo(() => {
+    const selectedCardColSpan = isLargeScreen ? 3 : 2;
+    const selectedCardRowSpan = isLargeScreen ? 2 : 3;
+
     // original "untouched" grid with raw definitions
-    const {
-      grid: originalGrid,
-      cols,
-      rows,
-    } = computeDefaultGrid(CONTENT_CARDS, {
+    const { grid: originalGrid, cols } = computeDefaultGrid(CONTENT_CARDS, {
       isLargeScreen,
     });
 
@@ -192,11 +261,18 @@ const About: React.FC = () => {
       return originalGrid; // fast exist, dont recompute the grid
     }
 
-    markAsSelected(selectedCard);
+    markAsSelected(selectedCard, {
+      colSpan: selectedCardColSpan,
+      rowSpan: selectedCardRowSpan,
+    });
 
-    // Expand by 2 rows if card is selected (give space to other cards)
-    const newRowsCount = selectedCard ? rows + 2 : rows;
-    const newColsCount = cols;
+    const newColsCount = Math.max(cols, selectedCard.i + selectedCard.colSpan);
+
+    const selectedCardVirtualCellsCount =
+      selectedCard.colSpan * selectedCard.rowSpan;
+    const virtualCellsCount =
+      originalGrid.length - 1 + selectedCardVirtualCellsCount;
+    const newRowsCount = Math.ceil(virtualCellsCount / newColsCount);
 
     const occupationMatrix: boolean[][] = Array.from(
       { length: newRowsCount },
@@ -213,67 +289,9 @@ const About: React.FC = () => {
 
     occupyCardSpace(selectedCard);
 
-    const findNearestFreeCell = (card: CardGridItem) => {
-      // Selected card keeps its current position
-      if (card.isSelected) {
-        return { i: card.i, j: card.j };
-      }
-
-      if (!occupationMatrix[card.j][card.i]) {
-        return { i: card.i, j: card.j };
-      }
-
-      const rowsCount = occupationMatrix.length;
-      const colsCount = occupationMatrix[0].length;
-
-      // Search same row for nearest free column (linear X move)
-      let bestRowCol: number | null = null;
-      let bestRowDist = Number.POSITIVE_INFINITY;
-      for (let col = 0; col < colsCount; col++) {
-        if (!occupationMatrix[card.j][col]) {
-          const dist = Math.abs(col - card.i);
-          if (dist < bestRowDist) {
-            bestRowDist = dist;
-            bestRowCol = col;
-          }
-        }
-      }
-
-      // Search same column for nearest free row (linear Y move)
-      let bestColRow: number | null = null;
-      let bestColDist = Number.POSITIVE_INFINITY;
-      for (let row = 0; row < rowsCount; row++) {
-        if (!occupationMatrix[row][card.i]) {
-          const dist = Math.abs(row - card.j);
-          if (dist < bestColDist) {
-            bestColDist = dist;
-            bestColRow = row;
-          }
-        }
-      }
-
-      // Choose the nearer option
-      if (bestRowCol !== null && bestRowDist <= bestColDist) {
-        return { i: bestRowCol, j: card.j };
-      }
-      if (bestColRow !== null) {
-        return { i: card.i, j: bestColRow };
-      }
-
-      // Fallback: first free cell
-      for (let row = 0; row < rowsCount; row++) {
-        for (let col = 0; col < colsCount; col++) {
-          if (!occupationMatrix[row][col]) {
-            return { i: col, j: row };
-          }
-        }
-      }
-
-      return { i: card.i, j: card.j };
-    };
-
+    // calculate nearest placement and occupy the space
     const newGrid = originalGrid.map((card) => {
-      const { i, j } = findNearestFreeCell(card);
+      const { i, j } = findNearestFreeCell(card, occupationMatrix);
 
       card.i = i;
       card.j = j;
@@ -283,7 +301,24 @@ const About: React.FC = () => {
     });
 
     return newGrid;
-  }, [selectedCardTitle, isLargeScreen]);
+  }, [isLargeScreen, selectedCardTitle]);
+};
+
+const About: React.FC = () => {
+  const isLargeScreen = useIsLargeScreen();
+  const [selectedCardTitle, setSelectedCardTitle] = useState<string | null>(
+    null,
+  );
+
+  const toggleSelectedCard = (card: CardDefinition) => {
+    if (selectedCardTitle === card.title) {
+      setSelectedCardTitle(null);
+    } else {
+      setSelectedCardTitle(card.title);
+    }
+  };
+
+  const cardsGrid = useCardsGrid({ selectedCardTitle, isLargeScreen });
 
   const renderContentCard = (card: CardGridItem) => {
     return (
