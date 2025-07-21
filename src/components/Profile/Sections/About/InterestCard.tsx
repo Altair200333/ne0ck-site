@@ -1,5 +1,6 @@
-import React from "react";
-import { Text, Flex, GridItem, Box } from "@chakra-ui/react";
+import React, { useMemo } from "react";
+import { Text, GridItem, Box, TextProps } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { CardGridItem } from "./useCardsGrid";
 
 export const CARD_WIDTH_PX = 170;
@@ -7,6 +8,26 @@ export const CARD_HEIGHT_PX = 50;
 export const CARDS_GAP_PX = 12;
 
 const CARD_BACKGROUND = "#424461";
+
+const useFadeAnimation = (params: {
+  initialOffset: number;
+  startOpacity?: number;
+}) => {
+  const { initialOffset = 0, startOpacity = 0 } = params;
+  return useMemo(() => {
+    const FADE_IN_ANIMATION = keyframes`
+    from {
+      opacity: ${startOpacity};
+      transform: translateY(${initialOffset}px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  `;
+    return FADE_IN_ANIMATION;
+  }, [initialOffset, startOpacity]);
+};
 
 const InterestCard: React.FC<{
   card: CardGridItem;
@@ -22,6 +43,80 @@ const InterestCard: React.FC<{
   const height = isSelected
     ? `${CARD_HEIGHT_PX * rowSpan + CARDS_GAP_PX * (rowSpan - 1)}px`
     : `${CARD_HEIGHT_PX}px`;
+
+  const renderIcon = () => {
+    const iconSize = 24;
+    const x = 10;
+    const y = Math.round(CARD_HEIGHT_PX * 0.5 - iconSize / 2);
+
+    return (
+      <Box
+        _groupHover={{
+          transform: `translate(${x}px, ${y}px) scale(1.2)`,
+          color: "var(--chakra-colors-blue-300)",
+        }}
+        transition={"0.2s ease-in-out"}
+        position={"absolute"}
+        top={0}
+        left={0}
+        transform={`translate(${x}px, ${y}px)`}
+      >
+        {icon}
+      </Box>
+    );
+  };
+
+  const fadeInAnimation = useFadeAnimation({
+    initialOffset: 0,
+    startOpacity: 0,
+  });
+  const fadeInSlideAnimation = useFadeAnimation({
+    initialOffset: 4,
+    startOpacity: 0,
+  });
+
+  const renderContent = () => {
+    const textProps: TextProps = {
+      my: "auto",
+      w: "fit-content",
+      pl: "45px",
+    };
+
+    if (!isSelected) {
+      return (
+        <Text
+          {...textProps}
+          userSelect={"none"}
+          opacity={0}
+          animation={`${fadeInAnimation} 0.3s ease-in-out 0.1s forwards`}
+        >
+          {title}
+        </Text>
+      );
+    }
+
+    return (
+      <Box py={"9px"} w="100%" h="100%">
+        <Text
+          {...textProps}
+          fontSize={"xl"}
+          opacity={0}
+          animation={`${fadeInAnimation} 0.3s ease-in-out 0.1s forwards`}
+        >
+          Tech stack
+        </Text>
+        <Text
+          {...textProps}
+          fontSize={"md"}
+          pt={2}
+          opacity={0}
+          animation={`${fadeInSlideAnimation} 0.3s ease-in-out 0.1s forwards`}
+        >
+          React, Node, JS/TS, Nest.js, Next.js, Unity, Blender, C#
+        </Text>
+      </Box>
+    );
+  };
 
   return (
     <GridItem
@@ -43,34 +138,13 @@ const InterestCard: React.FC<{
       alignContent={"center"}
       onClick={toggleSelected}
       _hover={{
-        backgroundColor: "#4a4c6d",
         boxShadow:
           "inset 0 0 0 2px rgba(66, 153, 225, 0.9), 0 0 8px rgba(66, 153, 225, 0.6)",
       }}
       className={"group"}
     >
-      <Flex
-        flexDirection={"row"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        w="100%"
-        mx="auto"
-        my="auto"
-        px={4}
-      >
-        <Box
-          _groupHover={{
-            transform: "scale(1.2)",
-            color: "var(--chakra-colors-blue-300)",
-          }}
-          transition={"0.2s ease-in-out"}
-        >
-          {icon}
-        </Box>
-        <Text mx="auto" my="auto" w="fit-content" userSelect={"none"}>
-          {title}
-        </Text>
-      </Flex>
+      {renderIcon()}
+      {renderContent()}
     </GridItem>
   );
 };
