@@ -1,10 +1,11 @@
-import { Flex, Stack, StackProps, useMediaQuery } from "@chakra-ui/react";
+import { Flex, Stack, StackProps } from "@chakra-ui/react";
 import ProfileSectionsSelector from "./ProfileSectionsSelector";
 import ShortBio from "./ShortBio";
 import React, { useState } from "react";
 import { Section } from "@/types/common";
 import { ProfileSectionProvider } from "@/contexts/ProfileSectionContext";
 import ProfileSection from "./ProfileSection";
+import { useIsLargeScreen } from "@/utils/hooks";
 
 interface ProfileNavigationProps {
   isLargeScreen: boolean;
@@ -29,12 +30,10 @@ interface ProfilePageProps {
   initialSection?: Section;
 }
 
-const FALLBACK_SECTION = Section.Projects;
+const FALLBACK_SECTION = Section.About;
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ initialSection }) => {
-  const [isLargeScreen] = useMediaQuery(["(min-width: 800px)"], {
-    fallback: [true],
-  });
+  const isLargeScreen = useIsLargeScreen();
 
   const Container = isLargeScreen ? Flex : Stack;
   const containerProps: Partial<StackProps> = isLargeScreen
