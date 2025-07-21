@@ -5,18 +5,15 @@ import { ProjectShortInfo } from "@/types/common";
 import ProjectPage from "./ProjectPage";
 import { PROJECTS_INFO } from "@/data/projects-definitions";
 
-interface ProjectsProps {
-  setSectionHeaderHidden?: (hidden: boolean) => void;
-}
+interface ProjectsProps {}
 
-const Projects: React.FC<ProjectsProps> = ({ setSectionHeaderHidden }) => {
+const Projects: React.FC<ProjectsProps> = () => {
   const [openedProject, setOpenedProjectImpl] = useState<
     ProjectShortInfo | undefined
   >(undefined);
 
   const setOpenedProject = (project?: ProjectShortInfo) => {
     setOpenedProjectImpl(project);
-    setSectionHeaderHidden?.(!!project);
   };
 
   if (openedProject) {
