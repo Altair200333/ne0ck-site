@@ -10,32 +10,39 @@ import { isDefined } from "@/utils/utils";
 type CardDefinition = {
   icon: React.ReactNode;
   title: string;
+  tech: string[];
 };
 
 const CONTENT_CARDS: CardDefinition[] = [
   {
     icon: <PiGlobeHemisphereWestBold />,
     title: "Web",
+    tech: ["React", "Node", "TS", "JS", "Nest.js", "Next.js"],
   },
   {
     icon: <LuMove3D />,
     title: "3D",
+    tech: ["C#", "Unity", "C++", "OpenGL", "DirectX"],
   },
   {
     icon: <TbDeviceMobile />,
     title: "Mobile",
+    tech: ["Android Java", "Flutter"],
   },
   {
     icon: <MdOutlineGames />,
     title: "Games",
+    tech: ["C#", "Unity", "Blender"],
   },
   {
     icon: <FaDesktop />,
     title: "Desktop",
+    tech: ["C#", "WPF", "Flutter"],
   },
   {
     icon: <GiSandSnake />,
     title: "Python",
+    tech: ["ML", "Data Analysis", "Side Projects"],
   },
 ];
 

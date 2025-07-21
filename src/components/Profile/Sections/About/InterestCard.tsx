@@ -33,7 +33,7 @@ const InterestCard: React.FC<{
   card: CardGridItem;
   toggleSelected: () => void;
 }> = ({ card, toggleSelected }) => {
-  const { i, j, isSelected, title, icon, colSpan, rowSpan } = card;
+  const { i, j, isSelected, title, icon, colSpan, rowSpan, tech } = card;
   const top = j * (CARD_HEIGHT_PX + CARDS_GAP_PX);
   const left = i * (CARD_WIDTH_PX + CARDS_GAP_PX);
 
@@ -112,7 +112,7 @@ const InterestCard: React.FC<{
           opacity={0}
           animation={`${fadeInSlideAnimation} 0.3s ease-in-out 0.1s forwards`}
         >
-          React, Node, JS/TS, Nest.js, Next.js, Unity, Blender, C#
+          {tech.join(", ")}
         </Text>
       </Box>
     );
