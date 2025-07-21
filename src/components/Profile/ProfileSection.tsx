@@ -1,7 +1,6 @@
-import { SECTION_LABEL } from "@/constants/constants";
 import { Section, SectionProps } from "@/types/common";
 import { assertUnreachable } from "@/utils/utils";
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
 import About from "./Sections/About";
 import Blog from "./Sections/Blog";

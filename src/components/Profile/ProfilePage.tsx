@@ -1,4 +1,4 @@
-import { Flex, Stack, StackProps, useMediaQuery } from "@chakra-ui/react";
+import { Flex, Stack, StackProps } from "@chakra-ui/react";
 import ProfileSectionsSelector from "./ProfileSectionsSelector";
 import ShortBio from "./ShortBio";
 import React, { useState } from "react";
